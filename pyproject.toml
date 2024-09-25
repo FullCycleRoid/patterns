@@ -1,0 +1,7 @@
+[project]
+name = 'patterns'
+
+[tool.pytest.ini_options]
+testpaths = [
+    'tests',
+]
