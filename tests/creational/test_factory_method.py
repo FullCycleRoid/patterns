@@ -71,15 +71,6 @@ cats_inputs = [
     (0, 'Bowee'),
 ]
 
-
-ape_inputs = [
-    (0, 'Fredrick'),
-    (1, 'Harahon'),
-    (2, 'Takazawa'),
-    (0, 'Seymour'),
-]
-
-
 def test_factory_method_exersice3_cat_names():
     ids, names = zip(*cats_inputs)
     cc = CatCreator()
@@ -87,6 +78,14 @@ def test_factory_method_exersice3_cat_names():
     assert len(animals) == len(cats_inputs)
     for i, animal in enumerate(animals):
         assert animal.getInfo() == animal.__class__.__name__ + " " + cats_inputs[i][1]
+
+
+ape_inputs = [
+    (0, 'Fredrick'),
+    (1, 'Harahon'),
+    (2, 'Takazawa'),
+    (0, 'Seymour'),
+]
 
 
 def test_factory_method_exersice3_ape_names():
