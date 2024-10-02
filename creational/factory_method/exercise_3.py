@@ -1,15 +1,43 @@
-class Lion:
-    def __init__(self, name):
-        self.__name = name
-
-    def getInfo(self):
-        return "Lion " + self.__name
-
-# Implement the Tiger, Leopard, Gorilla,
-#   Orangutan and Chimpanzee classes
+from abc import ABC, abstractmethod
+from typing import Dict, Callable
 
 
-class AnimalCreator:
+class Animal(ABC):
+    def __init__(self, name: str):
+        self.name = name
+
+    def getInfo(self) -> str:
+        return str(self.__class__.__name__) + ' ' + self.name
+
+
+class Lion(Animal):
+    ...
+
+
+class Tiger(Animal):
+    ...
+
+
+class Leopard(Animal):
+    ...
+
+
+class Gorilla(Animal):
+    ...
+
+
+class Orangutan(Animal):
+    ...
+
+
+class Chimpanzee(Animal):
+    ...
+
+
+class AnimalCreator(ABC):
+    @abstractmethod
+    def createAnimal(self, ind: int, name: str) -> Animal: ...
+
     def getZoo(self, inds, names):
         zoo = []
         for i in range(len(inds)):
@@ -18,9 +46,23 @@ class AnimalCreator:
 
 
 class CatCreator(AnimalCreator):
-    def createAnimal(self, ind, name):
-        pass
-        # Implement the method
+    cat_types: Dict[int, Callable] = {
+        0: Lion,
+        1: Tiger,
+        2: Leopard
+    }
+
+    def createAnimal(self, ind: int, name: str) -> Animal:
+        if ind in self.cat_types:
+            return self.cat_types[ind](name)
 
 
-# Implement the ApeCreator descendant class
+class ApeCreator(AnimalCreator):
+    ape_types: Dict[int, Callable] = {
+        0: Gorilla,
+        1: Orangutan,
+        2: Chimpanzee
+    }
+
+    def createAnimal(self, ind: int, name: str) -> Animal:
+        return self.ape_types[ind](name)

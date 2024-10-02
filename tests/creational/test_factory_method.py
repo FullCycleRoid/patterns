@@ -1,7 +1,10 @@
+from typing import List
+
 import pytest
 
 from creational.factory_method.exercise_1 import ConcreteCreator1, ConcreteCreator2
 from creational.factory_method.exercise_2 import ConcreteCreator1 as exs2_ConcreteCreator1, ConcreteCreator2 as exs2_ConcreteCreator2
+from creational.factory_method.exercise_3 import CatCreator, ApeCreator, Animal
 
 
 @pytest.mark.parametrize(
@@ -44,8 +47,6 @@ def test_factory_method_exersice1_2(payload, expected):
 )
 def test_factory_method_exersice2_1(payload, expected):
     cc = exs2_ConcreteCreator1()
-    res = cc.anOperation(payload)
-    print(res, 'yhnghnghngh')
     assert cc.anOperation(payload) == expected
 
 
@@ -61,3 +62,37 @@ def test_factory_method_exersice2_1(payload, expected):
 def test_factory_method_exersice2_2(payload, expected):
     cc = exs2_ConcreteCreator2()
     assert cc.anOperation(payload) == expected
+
+
+cats_inputs = [
+    (0, 'Fluffy'),
+    (1, 'Duffy'),
+    (2, 'Snowee'),
+    (0, 'Bowee'),
+]
+
+
+ape_inputs = [
+    (0, 'Fredrick'),
+    (1, 'Harahon'),
+    (2, 'Takazawa'),
+    (0, 'Seymour'),
+]
+
+
+def test_factory_method_exersice3_cat_names():
+    ids, names = zip(*cats_inputs)
+    cc = CatCreator()
+    animals: List[Animal] = cc.getZoo(inds=ids, names=names)
+    assert len(animals) == len(cats_inputs)
+    for i, animal in enumerate(animals):
+        assert animal.getInfo() == animal.__class__.__name__ + " " + cats_inputs[i][1]
+
+
+def test_factory_method_exersice3_ape_names():
+    ids, names = zip(*ape_inputs)
+    cc = ApeCreator()
+    animals: List[Animal] = cc.getZoo(inds=ids, names=names)
+    assert len(animals) == len(ape_inputs)
+    for i, animal in enumerate(animals):
+        assert animal.getInfo() == animal.__class__.__name__ + " " + ape_inputs[i][1]
