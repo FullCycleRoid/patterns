@@ -1,40 +1,71 @@
-class ProductA1:
-    def __init__(self, info):
-        pass
-        # Implement the "constructor"
+from abc import ABC, abstractmethod
 
+
+class AbstractProductA(ABC):
+    def __init__(self, info: int):
+        self.info: str = str(info)
+
+    @abstractmethod
     def A(self):
         pass
-        # Implement the method
 
     def getInfo(self):
-        pass
-        # Implement the method
+        return self.info
 
-# Implement the ProductA2 class
 
-class ProductB1:
-    def __init__(self, info):
-        pass
-        # Implement the "constructor"
+class ProductA1(AbstractProductA):
+    def A(self) -> None:
+        self.info = str(int(self.info) * 2)
 
+
+class ProductA2(AbstractProductA):
+    def A(self) -> None:
+        self.info = self.info * 2
+
+
+class AbstractProductB(ABC):
+    def __init__(self, info: int):
+        self.info: str = str(info)
+
+    @abstractmethod
     def B(self, objA):
         pass
-        # Implement the method
 
     def getInfo(self):
+        return self.info
+
+
+class ProductB1(AbstractProductB):
+    def B(self, objA: AbstractProductA):
+        self.info = str(int(self.info) + int(objA.info))
+
+
+class ProductB2(AbstractProductB):
+    def B(self, objA: AbstractProductA):
+        self.info = self.info + objA.info
+
+
+class AbstractFactory(ABC):
+    @abstractmethod
+    def createProductA(self, info) -> AbstractProductA:
         pass
-        # Implement the method
 
-# Implement the ProductB2 class
-
-class ConcreteFactory1:
-    def createProductA(self, info):
+    @abstractmethod
+    def createProductB(self, info) -> AbstractProductB:
         pass
-        # Implement the method
 
-    def createProductB(self, info):
-        pass
-        # Implement the method
 
-# Implement the ConcreteFactory2 class
+class ConcreteFactory1(AbstractFactory):
+    def createProductA(self, info) -> AbstractProductA:
+        return ProductA1(info)
+
+    def createProductB(self, info) -> AbstractProductB:
+        return ProductB1(info)
+
+
+class ConcreteFactory2(AbstractFactory):
+    def createProductA(self, info) -> AbstractProductA:
+        return ProductA2(info)
+
+    def createProductB(self, info) -> AbstractProductB:
+        return ProductB2(info)

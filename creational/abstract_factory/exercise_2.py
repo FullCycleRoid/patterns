@@ -1,52 +1,89 @@
-class Button1:
-    def __init__(self, text):
-        pass
-        # Implement the "constructor"
+from abc import abstractmethod
 
+
+class AbstractButton:
+    def __init__(self, text):
+        self.text = text
+
+    @abstractmethod
     def getControl(self):
         pass
-        # Implement the method
-
-# Implement the Button2 class
 
 
-class Label1:
-    def __init__(self, text):
-        pass
-        # Implement the "constructor"
+class Button1(AbstractButton):
 
     def getControl(self):
+        return "[" + self.text.upper() + "]"
+
+
+class Button2(AbstractButton):
+    def getControl(self):
+        return "<" + self.text.lower() + ">"
+
+
+class AbstractLabel:
+    def __init__(self, text):
+        self.text = text
+
+    @abstractmethod
+    def getControl(self):
         pass
+
+
+class Label1(AbstractLabel):
+    def getControl(self):
+        return "=" + self.text.upper() + "="
         # Implement the method
 
-# Implement the Label2 class
+
+class Label2(AbstractLabel):
+    def getControl(self):
+        return "\"" + self.text.lower() + "\""
 
 
-class Factory1:
+class ControlFactory:
+    @abstractmethod
     def createButton(self, text):
-        pass
-        # Implement the method
+        return Button1(text)
+
+    @abstractmethod
+    def createLabel(self, text):
+        return Label1(text)
+
+
+class Factory1(ControlFactory):
+    def createButton(self, text):
+        return Button1(text)
 
     def createLabel(self, text):
-        pass
-        # Implement the method
+        return Label1(text)
 
-# Implement the Factory2 class
+
+class Factory2(ControlFactory):
+    def createButton(self, text):
+        return Button2(text)
+
+    def createLabel(self, text):
+        return Label2(text)
 
 
 class Client:
-    def __init__(self, f):
-        pass
-        # Implement the "constructor"
+    def __init__(self, f: ControlFactory):
+        self.factory = f
+        self.controls = []
+        self.result = []
 
     def addButton(self, text):
-        pass
-        # Implement the method
+        b = self.factory.createButton(text)
+        self.controls.append(b)
 
     def addLabel(self, text):
-        pass
-        # Implement the method
+        l = self.factory.createLabel(text)
+        self.controls.append(l)
 
     def getControls(self):
-        pass
-        # Implement the method
+        for c in self.controls:
+            r = c.getControl()
+            self.result.append(r)
+
+        return " ".join(self.result)
