@@ -1,30 +1,68 @@
-class BuilderPascal:
+from abc import abstractmethod
 
+
+class AbstractBuilder:
     def __init__(self):
-        pass
-        # Implement the "constructor"
+        self._product = ''
 
     def buildStart(self, c):
-        pass
-        # Implement the method
+        self._product += c.lower()
 
     def buildFirstChar(self, c):
-        pass
-        # Implement the method
+        self._product += c.upper()
 
     def buildNextChar(self, c):
-        pass
-        # Implement the method
+        self._product += c.lower()
 
     def buildDelim(self):
         pass
-        # Implement the method
 
     def getResult(self):
-        pass
-        # Implement the method
+        return self._product
 
-# Implement the BuilderPyhton and BuilderC classes
+
+class BuilderPascal(AbstractBuilder):
+
+    def buildStart(self, c):
+        self._product += c.lower()
+
+    def buildFirstChar(self, c):
+        self._product += c.upper()
+
+    def buildNextChar(self, c):
+        self._product += c.lower()
+
+    def buildDelim(self):
+        pass
+
+
+class BuilderPython(AbstractBuilder):
+    def buildStart(self, c):
+        self._product += c.lower()
+
+    def buildFirstChar(self, c):
+        self._product += c.lower()
+
+    def buildNextChar(self, c):
+        self._product += c.lower()
+
+    def buildDelim(self):
+        self._product += '_'
+
+
+class BuilderC(AbstractBuilder):
+    def buildStart(self, c):
+        self._product += c.lower()
+
+    def buildFirstChar(self, c):
+        self._product += c.lower()
+
+    def buildNextChar(self, c):
+        self._product += c.lower()
+
+    def buildDelim(self):
+        self._product += '_'
+
 
 class Director:
     def __init__(self, b):
@@ -33,6 +71,5 @@ class Director:
     def getResult(self):
         return self.__b.getResult()
 
-    def construct(self, templat):
-        self.__b.buildStart(templat[0])
-        # Complete the implementation of the method
+    def construct(self, template):
+        self.__b.buildStart(template[0])
