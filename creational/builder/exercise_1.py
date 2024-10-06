@@ -34,13 +34,13 @@ class ConcreteBuilder1(Builder):
 
 class ConcreteBuilder2(Builder):
     def buildPartA(self):
-        self._product += "=1="
+        self._product += "=*="
 
     def buildPartB(self):
-        self._product += "=2="
+        self._product += "=**="
 
     def buildPartC(self):
-        self._product += "=3="
+        self._product += "=***="
 
 
 class Director:

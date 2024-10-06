@@ -1,32 +1,39 @@
-class ConcretePrototype1:
-    def __init__(self, str):
-        pass
-        # Implement the "constructor"
+from abc import ABC, abstractmethod
+from copy import deepcopy
 
-    def clone(self):
-        pass
-        # Implement the method
+
+class AbstractPrototype(ABC):
+    def __init__(self, data: str, id: int):
+        self.data = data
+        self.id = id
 
     def changeId(self, id):
-        pass
-        # Implement the method
+        self.id = id
 
+    def clone(self):
+        return deepcopy(self)
+
+    @abstractmethod
     def getInfo(self):
         pass
-        # Implement the method
 
-# Implement the ConcretePrototype2 class
+
+class ConcretePrototype1(AbstractPrototype):
+    def getInfo(self):
+        return 'CP1' + '=' + self.data + '=' + str(self.id)
+
+
+class ConcretePrototype2(AbstractPrototype):
+    def getInfo(self):
+        return 'CP2' + '=' + self.data + '=' + str(self.id)
 
 
 class Client:
     def __init__(self, p):
         pass
-        # Implement the "constructor"
 
     def operation(self, id):
         pass
-        # Implement the method
 
     def getObjects(self):
         pass
-        # Implement the method
