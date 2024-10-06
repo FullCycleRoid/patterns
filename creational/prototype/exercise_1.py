@@ -30,10 +30,14 @@ class ConcretePrototype2(AbstractPrototype):
 
 class Client:
     def __init__(self, p):
-        pass
+        self.__p = p
+        self.results = []
 
     def operation(self, id):
-        pass
+        obj = self.__p.clone()
+        obj.changeId(id)
+        info = obj.getInfo()
+        self.results.append(info)
 
     def getObjects(self):
-        pass
+        return ' '.join(self.results)
