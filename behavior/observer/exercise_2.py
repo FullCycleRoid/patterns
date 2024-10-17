@@ -1,46 +1,63 @@
 class Subject:
     def __init__(self):
-        pass
-        # Implement the "constructor"
+        self._observers: list['ConcreteObserver'] = []
 
     def attach(self, observ):
-        pass
-        # Implement the method
+        self._observers.append(observ)
 
     def detach(self, observ):
-        pass
-        # Implement the method
+        self._observers.remove(observ)
 
-    def notify(self, info):
-        pass
-        # Implement the method
 
 class ConcreteSubject(Subject):
     def __init__(self):
-        pass
-        # Implement the "constructor"
+        super().__init__()
+        self.state = ""
 
     def setState(self, st):
-        pass
-        # Implement the method
+        if self.state != st:
+            self.state = st
+            self._notify(st)
 
-class ConcreteObserver:
-    def __init__(self, detachInfo):
-        pass
-        # Implement the "constructor"
+    def _notify(self, info):
+        for observer in self._observers:
+            observer.onInfo(sender=self, info=info)
 
+
+class Observer:
+    @staticmethod
     def attach(self, subj):
         pass
-        # Implement the method
 
+    @staticmethod
     def detach(self, subj):
         pass
-        # Implement the method
 
-    def getLog(self):
+    @staticmethod
+    def getLog(self) -> str:
         pass
-        # Implement the method
 
+    @staticmethod
     def onInfo(self, sender, info):
         pass
-        # Implement the method
+
+
+class ConcreteObserver(Observer):
+    def __init__(self, detachInfo: str):
+        self._detachInfo = detachInfo.lower()
+        self._log: str = ''
+
+    def attach(self, subj: ConcreteSubject):
+        subj.attach(self)
+
+    def detach(self, subj: ConcreteSubject):
+        subj.detach(self)
+
+    def getLog(self) -> str:
+        return f'{self._detachInfo.upper()} {self._log}'
+
+    def onInfo(self, sender: ConcreteSubject, info: str):
+        self._log += info
+        if info.endswith(self._detachInfo):
+            self.detach(sender)
+
