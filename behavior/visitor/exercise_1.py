@@ -1,44 +1,114 @@
-class ConcreteElementA:
-    # Add required fields and methods
+from abc import ABC, abstractmethod
 
-    def accept(self, v):
+
+class Element(ABC):
+
+    @abstractmethod
+    def accept(self, visitor):
         pass
-        # Implement the method
 
-class ConcreteElementB:
-    # Add required fields and methods
 
-    def accept(self, v):
+class ConcreteElementA(Element):
+    data: int
+
+    def __init__(self, data: int):
+        self.data = data
+
+    def GetData(self):
+        return self.data
+
+    def SetData(self, newData: int):
+        self._data = newData
+
+    def accept(self, v: 'Visitor'):
+        # v.visitConcreteElementA()
         pass
-        # Implement the method
 
-class ConcreteElementC:
-    # Add required fields and methods
 
-    def accept(self, v):
+class ConcreteElementB(Element):
+    data: str
+
+    def __init__(self, data: str):
+        self.data = data
+
+    def GetData(self):
+        return self.data
+
+    def SetData(self, newData: str):
+        self._data = newData
+
+    def accept(self, v: 'Visitor'):
+        # v.visitConcreteElementB()
         pass
-        # Implement the method
+
+
+class ConcreteElementC(Element):
+    data: float
+
+    def __init__(self, data: float):
+        self.data = data
+
+    def GetData(self):
+        return self.data
+
+    def SetData(self, newData: float):
+        self._data = newData
+
+    def accept(self, v: 'Visitor'):
+        v.visitConcreteElementC()
+
 
 class ObjectStructure:
-    def __init__(self, struc):
-        self.__struc = struc
+    def __init__(self, struc: list['Element']):
+        self.__struc: list['Element'] = struc
 
     def accept(self, v):
         for e in self.__struc:
             e.accept(v)
 
-class ConcreteVisitor1:
+
+class Visitor:
+    @abstractmethod
     def visitConcreteElementA(self, e):
         pass
-        # Implement the method
+
+    @abstractmethod
+    def visitConcreteElementB(self, e):
+        pass
+
+    @abstractmethod
+    def visitConcreteElementC(self, e):
+        pass
+
+
+class ConcreteVisitor1(Visitor):
+    def visitConcreteElementA(self, e):
+        pass
 
     def visitConcreteElementB(self, e):
         pass
-        # Implement the method
 
     def visitConcreteElementC(self, e):
         pass
-        # Implement the method
 
-# Implement the ConcreteVisitor2
-#   and ConcreteVisitor3 classes
+
+class ConcreteVisitor2(Visitor):
+    def visitConcreteElementA(self, e):
+        pass
+
+    def visitConcreteElementB(self, e):
+        pass
+
+    def visitConcreteElementC(self, e):
+        pass
+
+
+class ConcreteVisitor3(Visitor):
+    def visitConcreteElementA(self, e):
+        pass
+
+    def visitConcreteElementB(self, e):
+        pass
+
+    def visitConcreteElementC(self, e):
+        pass
