@@ -21,8 +21,7 @@ class ConcreteElementA(Element):
         self._data = newData
 
     def accept(self, v: 'Visitor'):
-        # v.visitConcreteElementA()
-        pass
+        v.visitConcreteElementA(self)
 
 
 class ConcreteElementB(Element):
@@ -38,8 +37,7 @@ class ConcreteElementB(Element):
         self._data = newData
 
     def accept(self, v: 'Visitor'):
-        # v.visitConcreteElementB()
-        pass
+        v.visitConcreteElementB(self)
 
 
 class ConcreteElementC(Element):
@@ -55,7 +53,7 @@ class ConcreteElementC(Element):
         self._data = newData
 
     def accept(self, v: 'Visitor'):
-        v.visitConcreteElementC()
+        v.visitConcreteElementC(self)
 
 
 class ObjectStructure:
